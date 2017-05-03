@@ -35,7 +35,7 @@ STATIC=libwiringPi.a
 DYNAMIC=libwiringPi.so.$(VERSION)
 
 PREFIX	=
--include ../../../makefile.prefix
+-include ../../Makefile.prefix
 #DEBUG	= -g -O0
 DEBUG	= -O2
 CC	= $(PREFIX)gcc
