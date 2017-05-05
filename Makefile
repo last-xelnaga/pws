@@ -11,7 +11,7 @@ CFLAGS = -Wall -Wextra -O2 -fno-omit-frame-pointer
 #CFLAGS	= -Wall -Wextra -O0 -g -ggdb
 
 INC = -I. -IwiringPi/wiringPi
-LIB = -lpthread -LwiringPi/wiringPi -lwiringPi
+LIB = -LwiringPi/wiringPi -lwiringPi -lrt -lpthread
 
 SRC	= \
     main.cpp
