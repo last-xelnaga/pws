@@ -1,44 +1,34 @@
 #include <stdio.h>
 #include <unistd.h>
-#include <wiringPi.h>
+#include "board_setup.hpp"
 
-#define RELAY_PIN     1
+// gpio for the relays
+#define PUMP_RELAY_PIN          4
+#define PCF_RELAY_PIN           5
 
+// dry soil threshold
+#define DRY_THRESHOLD           500
 
-void relay_switch_on (
-        void)
-{
-    digitalWrite (RELAY_PIN, 1);
-}
+// how many seconds pump has to work
+#define PUMP_ACTIVE_TIME        45
 
-void relay_switch_off (
-        void)
-{
-    digitalWrite (RELAY_PIN, 0);
-}
+// sleeping time betwean checks, 1 hour by deafault
+#define WAIT_FOR_NEXT_CHECK     (60 * 60)
+
 
 int main (
         void)
 {
-    if (geteuid () != 0)
+
+    board_setup board (PUMP_RELAY_PIN, PCF_RELAY_PIN);
+
+    while (1)
     {
-        printf ("need to be root to run. exit");
-        return -1;
+        if (board.is_soil_dry (DRY_THRESHOLD))
+            board.switch_the_pump_on (PUMP_ACTIVE_TIME);
+
+        sleep (WAIT_FOR_NEXT_CHECK);
     }
-
-    if (wiringPiSetup () == -1)
-    {
-        printf ("board setup has failed. exit");
-        return -1;
-    }
-
-    // setup relay
-    pinMode (RELAY_PIN, OUTPUT);
-    relay_switch_off ();
-
-    // setup soil sensor
-    
-
 
     return 0;
 }

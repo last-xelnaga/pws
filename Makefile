@@ -14,6 +14,7 @@ INC = -I. -IwiringPi/wiringPi
 LIB = -LwiringPi/wiringPi -lwiringPi -lrt -lpthread
 
 SRC	= \
+    board_setup.cpp \
     main.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJDIR)/%.o)
@@ -34,6 +35,7 @@ $(TARGET): $(OBJDIR) $(OBJ)
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
 
+$(OBJDIR)/board_setup.o: board_setup.hpp Makefile
 $(OBJDIR)/main.o: Makefile
 
-# valgrind --leak-check=full --show-leak-kinds=all ./shp_client
+# valgrind --leak-check=full --show-leak-kinds=all ./pws
