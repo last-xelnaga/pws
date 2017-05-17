@@ -1,29 +1,26 @@
 #ifndef BOARD_SETUP_HPP
 #define BOARD_SETUP_HPP
 
-#include <string>
-
-class board_setup
+class board_setup_class
 {
 private:
-    unsigned char pump_gpio_num;
-    unsigned char pcf_gpio_num;
-
     int init_board (
             void);
 
 public:
-    board_setup (
-            unsigned char pump_gpio_num_,
-            unsigned char pcf_gpio_num_);
+    board_setup_class (
+            void);
 
-    bool is_soil_dry (
-            unsigned int threshold);
+    bool is_time_for_watering (
+            void);
 
-    void switch_the_pump_on (
-            unsigned int seconds);
+    void activate_pump (
+            void);
 
-    ~board_setup (
+    void status_led_signal (
+            bool signal = true);
+
+    ~board_setup_class (
             void);
 };
 

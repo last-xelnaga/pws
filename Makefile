@@ -7,15 +7,16 @@ TARGET = pws
 
 CC = $(PREFIX)g++
 
-CFLAGS = -Wall -Wextra -O2 -fno-omit-frame-pointer
-#CFLAGS	= -Wall -Wextra -O0 -g -ggdb
+CFLAGS = -Wall -Wextra -O2 -std=c++11 -fno-omit-frame-pointer
+#CFLAGS	= -Wall -Wextra -O0 -g -ggdb -std=c++11
 
 INC = -I. -IwiringPi/wiringPi
 LIB = -LwiringPi/wiringPi -lwiringPi -lrt -lpthread
 
 SRC	= \
     board_setup.cpp \
-    main.cpp
+    main.cpp \
+    settings.cpp
 
 OBJ = $(SRC:%.cpp=$(OBJDIR)/%.o)
 
@@ -35,7 +36,8 @@ $(TARGET): $(OBJDIR) $(OBJ)
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
 
-$(OBJDIR)/board_setup.o: board_setup.hpp Makefile
-$(OBJDIR)/main.o: Makefile
+$(OBJDIR)/board_setup.o: Makefile board_setup.hpp settings.hpp
+$(OBJDIR)/main.o: Makefile board_setup.hpp settings.hpp
+$(OBJDIR)/settings.o: Makefile settings.hpp
 
 # valgrind --leak-check=full --show-leak-kinds=all ./pws
