@@ -5,18 +5,18 @@
 
 // gpio for the relays and sensors
 #define PUMP_RELAY_PIN          2
-#define CHECKER_RELAY_PIN       3
+#define CHECKER_RELAY_PIN       5
 #define TERMO_DHT_PIN           4
-#define STATUS_LED_PIN          5
+#define STATUS_LED_PIN          3
 
 // dry soil threshold
 #define DRY_THRESHOLD           500
 
 // how many seconds pump has to work
-#define PUMP_ACTIVE_TIME        45
+#define PUMP_ACTIVE_TIME        90
 
-// sleeping time betwean checks, 1 hour by deafault
-#define WAIT_FOR_NEXT_CHECK     (60 * 60)
+// sleeping time betwean checks, 1 day by deafault
+#define WAIT_FOR_NEXT_CHECK     (60 * 60 * 24)
 
 // name of the file with settings (optional)
 #define SETTINGS_FILE_NAME      "settings.cfg"
@@ -117,28 +117,28 @@ unsigned char settings_class::relay_pump_gpio (
         void)
 {
     read_config_file ();
-    return relay_pump_gpio_num;
+    return 2;//relay_pump_gpio_num;
 }
 
 unsigned char settings_class::relay_checker_gpio (
         void)
 {
     read_config_file ();
-    return relay_checker_gpio_num;
+    return 5;//relay_checker_gpio_num;
 }
 
 unsigned char settings_class::dht_termo_gpio (
         void)
 {
     read_config_file ();
-    return dht_termo_gpio_num;
+    return 7;//dht_termo_gpio_num;
 }
 
 unsigned char settings_class::status_led_gpio (
         void)
 {
     read_config_file ();
-    return status_led_gpio_num;
+    return 3;//status_led_gpio_num;
 }
 
 unsigned int settings_class::get_soil_dry_threshold (

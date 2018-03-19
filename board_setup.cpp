@@ -45,7 +45,7 @@ int board_setup_class::init_board (
     // Setup mcp3008
     if (result == 0)
     {
-        mcp3004Setup (MCP_BASE, SPI_CHAN);
+        //mcp3004Setup (MCP_BASE, SPI_CHAN);
     }
 
     return result;
@@ -65,8 +65,8 @@ board_setup_class::board_setup_class (
     pinMode (settings_class::get_instance ().relay_pump_gpio (), OUTPUT);
     digitalWrite (settings_class::get_instance ().relay_pump_gpio (), LOW);
 
-    pinMode (settings_class::get_instance ().relay_checker_gpio (), OUTPUT);
-    digitalWrite (settings_class::get_instance ().relay_checker_gpio (), LOW);
+    //pinMode (settings_class::get_instance ().relay_checker_gpio (), OUTPUT);
+    //digitalWrite (settings_class::get_instance ().relay_checker_gpio (), LOW);
 
     pinMode (settings_class::get_instance ().status_led_gpio (), OUTPUT);
     digitalWrite (settings_class::get_instance ().status_led_gpio (), LOW);
@@ -77,6 +77,8 @@ bool board_setup_class::is_time_for_watering (
 {
     bool result = false;
 
+    status_led_signal (true);
+
     digitalWrite (settings_class::get_instance ().relay_checker_gpio (), HIGH);
     sleep (1);
 
@@ -86,6 +88,8 @@ bool board_setup_class::is_time_for_watering (
         result = true;
 
     digitalWrite (settings_class::get_instance ().relay_checker_gpio (), LOW);
+
+    status_led_signal (false);
 
     return result;
 }
@@ -100,9 +104,11 @@ void board_setup_class::activate_pump (
         return;
     }*/
 
+    printf ("gpio %d\n", settings_class::get_instance ().relay_pump_gpio ());
     digitalWrite (settings_class::get_instance ().relay_pump_gpio (), HIGH);
 
-    sleep (settings_class::get_instance ().get_pump_active_time ());
+    //sleep (settings_class::get_instance ().get_pump_active_time ());
+    sleep (1);
 
     digitalWrite (settings_class::get_instance ().relay_pump_gpio (), LOW);
 }
@@ -122,6 +128,6 @@ board_setup_class::~board_setup_class (
         void)
 {
     digitalWrite (settings_class::get_instance ().relay_pump_gpio (), LOW);
-    digitalWrite (settings_class::get_instance ().relay_checker_gpio (), LOW);
+    //digitalWrite (settings_class::get_instance ().relay_checker_gpio (), LOW);
     digitalWrite (settings_class::get_instance ().status_led_gpio (), LOW);
 }
